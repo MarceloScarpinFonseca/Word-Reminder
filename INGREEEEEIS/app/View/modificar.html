@@ -1,0 +1,33 @@
+<h1>Modificar Palavra</h1>
+
+<form method="post" action="?pagina=add&metodo=update">
+    
+    <span>Palavra</span><br>
+    <textarea name="Palavra" cols="25" rows="2">{{palavra.Palavra}}</textarea><br>
+    
+    <span>Significados</span><br>
+    <input type="number" name="Significados" min="1" value="{{palavra.Significados}}"><br>
+    
+    <span>Dificuldade</span><br>
+    <input type="number" name="Dificuldade" min="0" max="2" value="{{palavra.Dificuldade}}"><br>    
+    
+    <span>Data de admissão</span><br>
+    <input type="date" name="DataAdd" value="{{palavra.DataAdd}}"><br>    
+     
+    <span>Data do último esquecimento</span><br>
+    <input type="date" name="DataEsquecida" value="{{palavra.DataEsquecida}}"><br>    
+     
+    <span>Acertos</span><br>
+    <input type="number" name="Acertos" min="0" value="{{palavra.Acertos}}"><br>    
+    
+    <span>Erros</span><br>
+    <input type="number" name="Erros" min="0" value="{{palavra.Erros}}"><br>    
+    
+    <span>Data do última revisão</span><br>
+    <input type="date" name="UltimaRev" value="{{palavra.UltimaRev}}"><br>    
+     
+    <input type="hidden" name="id" value="{{palavra.id}}">
+    <a class="link" href="/INGREEEEEIS/index.php/?pagina=revisao&metodo=addAvulsa&id={{palavra.id}}">Adicionar revisão avulsa</a><br>
+    <a style="color: red" class="link" href="/INGREEEEEIS/index.php/?pagina=revisao&metodo=apagarRevs&id={{palavra.id}}">Apagar todas as revisões agendadas</a><br><br>
+    <input type="submit" value="Modificar">
+</form>

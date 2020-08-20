@@ -1,0 +1,28 @@
+<section>
+        <h1>Palavra modificada!</h1>
+
+        
+                <article>
+                        
+
+                        <p>
+                             {% if palavra.Dificuldade == 0 %}
+                                <img src="/INGREEEEEIS/app/Img/Verde.bmp" width="10" height="10" border="1">
+                             {% elseif palavra.Dificuldade == 1 %}
+                                <img src="/INGREEEEEIS/app/Img/Amarelo.bmp" width="10" height="10" border="1">
+                             {% else %}
+                                <img src="/INGREEEEEIS/app/Img/Vermelho.bmp" width="10" height="10" border="1">
+                             {% endif %}
+                             <a class="link" href="/INGREEEEEIS/index.php/?pagina=add&metodo=modificar&id={{palavra.id}}">{{palavra.Palavra}}</a>
+                        </p> 
+                        <p> 
+                            <a>&nbsp&nbsp&nbsp</a>
+                            {% for i in 1..palavra.Significados %}
+                            <a>&#8226;</a>
+                            {% endfor %}
+                        
+                        </p>
+                </article>
+        
+        
+</section>

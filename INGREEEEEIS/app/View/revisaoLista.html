@@ -1,0 +1,79 @@
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+.data{
+    text-align: center;
+}
+div.palavra{
+    margin-right: 10px;
+}
+td.data{
+    text-align: center;
+}
+td.verde{
+    text-align: center;
+    color: green;
+}
+td.vermelho{
+    text-align: center;
+    color: red;
+}
+</style>
+<section>
+        <h1>Lista de palavras para revisão:</h1>
+        
+        
+        
+        <article>
+        <table>
+                        <tr>
+                            <th>Palavra</th>
+                            <th><div class="data">Fase</div></th>
+                            <th>Data da última revisão</th>  
+                            <th>Data da próxima revisão</th>  
+                            <th>Acertos</th>  
+                            <th>Erros</th>  
+                            <th>Editar revisão</th>  
+                        </tr>
+        {% for word in palavras%}
+           
+                            <tr>
+                                <td>
+                                    <div class="palavra">
+                             {% if word.Dificuldade == 0 %}
+                                <a href="/INGREEEEEIS/index.php/?pagina=treinar&metodo=esqueceu&id={{word.id}}"><img src="/INGREEEEEIS/app/Img/Verde.bmp" width="10" height="10" border="1"></a>
+                             {% elseif word.Dificuldade == 1 %}
+                                <a href="/INGREEEEEIS/index.php/?pagina=treinar&metodo=esqueceu&id={{word.id}}"><img src="/INGREEEEEIS/app/Img/Amarelo.bmp" width="10" height="10" border="1"></a>
+                             {% else %}
+                             <a href="/INGREEEEEIS/index.php/?pagina=treinar&metodo=esqueceu&id={{word.id}}"><img src="/INGREEEEEIS/app/Img/Vermelho.bmp" width="10" height="10" border="1"></a>
+                             {% endif %}
+                                <a class="link" href="/INGREEEEEIS/index.php/?pagina=add&metodo=modificar&id={{word.id}}">{{word.Palavra}}</a>
+                         
+                         
+                           
+                            {% for i in 1..word.Significados %}
+                            <a>&#8226;</a> 
+                            {% endfor %}
+                                    </div>
+                            </td>
+                            
+                            <td>
+                                <div class="data">{{word.Ordem}}</div>
+                            </td>
+                            <td>
+                                <div class="data">{{word.UltimaRev}} </div>
+                            </td>                            
+                            <td>
+                                <div class="data">{{word.DataRev}} </div>
+                            </td>
+                            <td class="verde">{{word.Acertos}}</td>
+                            <td class="vermelho">{{word.Erros}}</td>
+                            <td style="text-align: center"><a class="link" href="/INGREEEEEIS/index.php/?pagina=revisao&metodo=editar&id={{word.idRev}}">Editar</a></td>
+                            </tr>
+                        
+                </article>
+        {% endfor %}
+        </table>
+</section>

@@ -1,0 +1,36 @@
+<h1>Modificar revisao:</h1>
+
+<form method="post" action="?pagina=revisao&metodo=editarGravar">
+    <p>
+                             {% if palavra.Dificuldade == 0 %}
+                                <img src="/INGREEEEEIS/app/Img/Verde.bmp" width="10" height="10" border="1">
+                             {% elseif palavra.Dificuldade == 1 %}
+                                <img src="/INGREEEEEIS/app/Img/Amarelo.bmp" width="10" height="10" border="1">
+                             {% else %}
+                                <img src="/INGREEEEEIS/app/Img/Vermelho.bmp" width="10" height="10" border="1">
+                             {% endif %}
+                             <a class="link" href="/INGREEEEEIS/index.php/?pagina=add&metodo=modificar&id={{palavra.id}}">{{palavra.Palavra}}</a>
+                        </p> 
+                        <p> 
+                            <a>&nbsp&nbsp&nbsp</a>
+                            {% for i in 1..palavra.Significados %}
+                            <a>&#8226;</a>
+                            {% endfor %}
+                        
+    </p>
+    <span>Data da próxima revisão</span><br>
+    <input type="date" name="DataRev" value="{{palavra.DataRev}}"><br> 
+    
+    <span>Ordem da revisão (fase)</span><br>
+    <input type="number" name="Ordem" min="1" max="10" value="{{palavra.Ordem}}"><br>
+    
+    <span>Id da palavra a ser revisada</span><br>
+    <input type="number" name="IdPalavra" min="0" value="{{palavra.IdPalavra}}"><br>    
+    
+    
+     
+    <input type="hidden" name="id" value="{{palavra.idRev}}">
+    
+    <input type="submit" value="Modificar">
+    <a style="color: red" href="/INGREEEEEIS/index.php/?pagina=revisao&metodo=editarApagar&id={{palavra.idRev}}">Apagar Revisão!</a>
+</form>

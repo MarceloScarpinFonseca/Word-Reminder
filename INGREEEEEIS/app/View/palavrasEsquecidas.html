@@ -1,0 +1,31 @@
+
+<section>
+        <h1>Palavras esquecidas durante esta revisão:</h1>
+        
+        
+        
+        {% for word in palavra%}
+                <article>
+                        
+
+                        <p>
+                             {% if word.Dificuldade == 0 %}
+                                <a href="/INGREEEEEIS/index.php/?pagina=treinar&metodo=esqueceu&id={{word.id}}"><img src="/INGREEEEEIS/app/Img/Verde.bmp" width="10" height="10" border="1"></a>
+                             {% elseif word.Dificuldade == 1 %}
+                                <a href="/INGREEEEEIS/index.php/?pagina=treinar&metodo=esqueceu&id={{word.id}}"><img src="/INGREEEEEIS/app/Img/Amarelo.bmp" width="10" height="10" border="1"></a>
+                             {% else %}
+                             <a href="/INGREEEEEIS/index.php/?pagina=treinar&metodo=esqueceu&id={{word.id}}"><img src="/INGREEEEEIS/app/Img/Vermelho.bmp" width="10" height="10" border="1"></a>
+                             {% endif %}
+                                <a class="link" href="/INGREEEEEIS/index.php/?pagina=add&metodo=modificar&id={{word.id}}">{{word.Palavra}}</a>
+                        </p> 
+                        <p> 
+                            <a>&nbsp&nbsp&nbsp</a>
+                            {% for i in 1..word.Significados %}
+                            <a>&#8226;</a>
+                            {% endfor %}
+                        
+                        </p>
+                </article>
+        {% endfor %}
+        
+</section>
