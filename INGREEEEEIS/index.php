@@ -15,7 +15,7 @@ date_default_timezone_set('Brazil/East');//pra evitar um bug de fusohorario
 
 session_start();
 
-if (isset($_SESSION['horario_session_aberta']) && $_SESSION['horario_session_aberta'] + 2 * 60 < time()) { //reseta a data a cada 2 horas
+if (isset($_SESSION['horario_session_aberta']) && $_SESSION['horario_session_aberta'] + 2 * 60 * 60 < time()) { //reseta a data a cada 2 horas
     /*
      * Usado para fechar a session pois,
      * em navegadores que guardam a session (abrir na página que você parou) a session não é destruida,
