@@ -25,110 +25,32 @@ class RevisaoController {
         $conteudo = $template->render($parametros);
         echo $conteudo;
     }
-    public function addRev($id) { //adiciona todas as 10 fases de revisão
+    public function addRev($id) {//id da palavra
+        /*
+         * Esta função adiciona uma determinada quantidade de revisões seguindo a sequência de Fibonacci;
+         * Ex: para 10 fases de revisão data + 1 2 3 5 8 13 21 34 55 89 dias;
+         */
+        $data = $_SESSION['data'];
         $revisao = array();
-        $revisao['id'] = $id;
-        Revisao::deletarPorId($id);
-        for ($index = 0; $index < 11; $index++) { //1 2 3 5 8 13 21 34 55 89
-            switch ($index) {
-                case 1:
-                    $data = $_SESSION['data'];
-                    $dataM = date('Y-m-d', strtotime($data. ' + 1 days'));
-                    $revisao['Data'] = $dataM;
-                    $revisao['Ordem'] = 1;
-                    Revisao::add($revisao);
-
-
-                    break;
-                case 2:
-                    $data = $_SESSION['data'];
-                    $dataM = date('Y-m-d', strtotime($data. ' + 2 days'));
-                    $revisao['Data'] = $dataM;
-                    $revisao['Ordem'] = 2;
-                    Revisao::add($revisao);
-
-
-                    break;
-                case 3:
-                    $data = $_SESSION['data'];
-                    $dataM = date('Y-m-d', strtotime($data. ' + 3 days'));
-                    $revisao['Data'] = $dataM;
-                    $revisao['Ordem'] = 3;
-                    Revisao::add($revisao);
-
-
-                    break;
-                case 4:
-                    $data = $_SESSION['data'];
-                    $dataM = date('Y-m-d', strtotime($data. ' + 5 days'));
-                    $revisao['Data'] = $dataM;
-                    $revisao['Ordem'] = 4;
-                    Revisao::add($revisao);
-
-
-                    break;
-                case 5:
-                    $data = $_SESSION['data'];
-                    $dataM = date('Y-m-d', strtotime($data. ' + 8 days'));
-                    $revisao['Data'] = $dataM;
-                    $revisao['Ordem'] = 5;
-                    Revisao::add($revisao);
-
-
-                    break;
-                case 6:
-                    $data = $_SESSION['data'];
-                    $dataM = date('Y-m-d', strtotime($data. ' + 13 days'));
-                    $revisao['Data'] = $dataM;
-                    $revisao['Ordem'] = 6;
-                    Revisao::add($revisao);
-
-
-                    break;
-                case 7:
-                    $data = $_SESSION['data'];
-                    $dataM = date('Y-m-d', strtotime($data. ' + 21 days'));
-                    $revisao['Data'] = $dataM;
-                    $revisao['Ordem'] = 7;
-                    Revisao::add($revisao);
-
-
-                    break;
-                case 8:
-                    $data = $_SESSION['data'];
-                    $dataM = date('Y-m-d', strtotime($data. ' + 34 days'));
-                    $revisao['Data'] = $dataM;
-                    $revisao['Ordem'] = 8;
-                    Revisao::add($revisao);
-
-
-                    break;
-                case 9:
-                    $data = $_SESSION['data'];
-                    $dataM = date('Y-m-d', strtotime($data. ' + 55 days'));
-                    $revisao['Data'] = $dataM;
-                    $revisao['Ordem'] = 9;
-                    Revisao::add($revisao);
-
-
-                    break;
-                case 10:
-                    $data = $_SESSION['data'];
-                    $dataM = date('Y-m-d', strtotime($data. ' + 89 days'));
-                    $revisao['Data'] = $dataM;
-                    $revisao['Ordem'] = 10;
-                    Revisao::add($revisao);
-
-
-                    break;
-
-            }
-            
-            
-            
+        $revisao['id'] = $id; //informa o id da palavra ligada a essa revisão
+        Revisao::deletarPorId($id);//deleta todas as revisões de uma palavra (id palavra)
+        if(!isset($fases)){
+            $fases = 10;
         }
-
-        
+        for ($index = 0; $index < $fases; $index++) {
+            if(!isset($b)){
+                $a = 0;
+                $b = 1;
+            }
+            $fi = $a + $b;
+            $a = $b;
+            $b = $fi;
+            $dataRev = date('Y-m-d', strtotime($data. ' + ' . $fi .' days')); 
+            $revisao['Data'] = $dataRev;
+            $ordem = $index + 1;
+            $revisao['Ordem'] = $ordem; //grava qual é a ordem/fase de revisão
+            Revisao::add($revisao);
+        }
     }
     public function editar() {
         $id = $_GET['id']; // este é o id da revisao
@@ -152,7 +74,6 @@ class RevisaoController {
         $parametros['revisao'] = $rev; //useless
         $conteudo = $template->render($parametros);
         echo $conteudo;
-        
     }
     public function editarGravar() {
         $rev = $_POST;
@@ -184,10 +105,52 @@ class RevisaoController {
         echo $conteudo;
     }
     public function addAvulsaGravar() {
-        
         $rev = $_POST;
         Revisao::add($rev);
         echo 'Revisão avulsa agendada com sucesso!';
+    }
+    public function addConjunto() {//adiciona conjunto de revisões 
+        $id = $_GET['id']; // este é o id da palavra
+        $rev = Revisao::selecionaPorId($id);
+        $rev = (array) $rev;
+                
+        $palavra = Palavra::selecionaPorId($id);
+        $palavra = (array) $palavra;
+        $palavra['IdPalavra'] = $id;
+        
+        $loader = new \Twig\Loader\FilesystemLoader('app/View');
+        $twig = new \Twig\Environment($loader);
+        $template = $twig->load('revisaoConjunto.html');
+        $parametros = array();
+        $parametros['palavra'] = $palavra;
+        $conteudo = $template->render($parametros);
+        echo $conteudo;
+    }
+    public function addConjuntoGravar() { //apaga todas as revisões agendadas e escreve uma quantidade personalizada de de risões (respeitado a sequência de Fibonacci)
+        $id = $_POST['id'];
+        $fases = $_POST['qtd'];
+        $data = $_SESSION['data'];
+        $revisao = array();
+        $revisao['id'] = $id; //informa o id da palavra ligada a essa revisão
+        Revisao::deletarPorId($id);//deleta todas as revisões de uma palavra (id palavra)
+        if(!isset($fases)){
+            $fases = 10;
+        }
+        for ($index = 0; $index < $fases; $index++) {
+            if(!isset($b)){
+                $a = 0;
+                $b = 1;
+            }
+            $fi = $a + $b;
+            $a = $b;
+            $b = $fi;
+            $dataRev = date('Y-m-d', strtotime($data. ' + ' . $fi .' days')); 
+            $revisao['Data'] = $dataRev;
+            $ordem = $index + 1;
+            $revisao['Ordem'] = $ordem; //grava qual é a ordem/fase de revisão
+            Revisao::add($revisao);
+        }
+        echo 'Revisões agendadas com sucesso!';
     }
     public function apagarRevs() { //recebe o id da palavra e apaga todas as revisões
         $id = $_GET['id'];
