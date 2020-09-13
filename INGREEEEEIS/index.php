@@ -44,4 +44,4 @@ $tplPronto = str_replace('{{area_dinamica}}', $saida, $template);
 echo $tplPronto;
 //Esta aplicação PHP foi criada usando o template e conceitos ensinados por Rafael Capoani https://github.com/RafaelCapo https://www.youtube.com/user/Suportedeweb
 //https://youtu.be/KGFaT0A7iTI Apresentação da ferramenta
-//Marcelo Fonseca https://github.com/MarceloScarpinFonseca 18/08/2020 Word Reminder1.2
+//Marcelo Fonseca https://github.com/MarceloScarpinFonseca 12/09/2020 Word Reminder 1.3
