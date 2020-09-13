@@ -15,8 +15,6 @@ class HomeController {
         } catch (Exception $e) {
             echo $e->getMessage();
         }
-        
-        
     }
     public function escolherData() { //aciona a view controlada pelo twig para inserir a data
         
