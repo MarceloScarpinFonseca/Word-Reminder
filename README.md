@@ -4,4 +4,4 @@ Esta aplicação PHP foi criada usando o template e conceitos ensinados por Rafa
 
 Neste vídeo eu apresento a ferramenta https://youtu.be/KGFaT0A7iTI
 
-Marcelo Fonseca https://github.com/MarceloScarpinFonseca 18/08/2020 Word Reminder1.2
+Marcelo Fonseca https://github.com/MarceloScarpinFonseca 12/09/2020 Word Reminder 1.3
