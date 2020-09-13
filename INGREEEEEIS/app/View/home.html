@@ -20,9 +20,17 @@
                         </p> 
                         <p> 
                             <a>&nbsp&nbsp&nbsp</a>
-                            {% for i in 1..word.Significados %}
-                            <a>&#8226;</a>
-                            {% endfor %}
+                            {% if word.Significados <= 3 %}
+                                {% for i in 1..word.Significados %}
+                                <a>&#8226;</a>
+                                {% endfor %}
+                            {% else %}
+                                <a>&#8226;</a>
+                                <a>&#8226;</a>
+                                <a>&#8226;</a>
+                                <a class="link"> + {{word.Significados - 3}}</a>
+                            {% endif %}
+                            
                         
                         </p>
                 </article>
